@@ -70,7 +70,7 @@
 							<div class="page_link">
 								<a href="https://semut-dev.github.io">Utama</a>
 								<a href="#">Proyek</a>
-								<a href="https://semut-dev.github.io/scraping-python2/">Web Scraping dengan Python 2</a>
+								<a href="https://semut-dev.github.io/visualisasi-python2/">Visualisasi Data Scraping</a>
 							</div>
 						</div>
 					</div>
@@ -86,25 +86,9 @@
                     <div class="col-lg-12 posts-list">
                         <div class="single-post row">
                             <div class="col-lg-12 col-md-12 blog_details">
-                                <h2>Web Scraping dengan Python 2</h2>
-                                <p>Berikut merupakan data buku yang diambil pada situs <b style="color:#766dff">goodreads.com</b></p>
-                                <div class="table-responsive table-hover tResp">
-                                    <table class="table cTable" id="dTable">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 10%;"><center>No</center></th>
-                                                <th><center>Gambar</center></th>
-                                                <th>Judul</th>
-                                                <th>Penulis</th>
-                                                <th>Rerata Rating</th>
-                                                <th>Total Rating</th>
-                                                <th>Waktu Scraping</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <h2>Visualisasi Data Scraping</h2>
+                                <p>Berikut merupakan data scraping yang dituangkan pada bentuk diagram</p>
+                                <!-- TODO -->
                             </div>
                         </div>
                         <div class="navigation-area">
@@ -112,13 +96,13 @@
                                 <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
                                     <div class="detials">
                                         <p>Sebelumnya</p>
-                                        <a href="https://semut-dev.github.io/scraping-python/"><h4>Web Scraping dengan Python 1 </h4></a>
+                                        <a href="https://semut-dev.github.io/scraping-python2/"><h4>Web Scraping dengan Python 2 </h4></a>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
                                     <div class="detials">
                                         <p>Selanjutnya</p>
-                                        <a href="https://semut-dev.github.io/visualisasi-python2/"><h4>Visualisasi Data Scraping 2 </h4></a>
+                                        <a href="https://semut-dev.github.io/about.html"><h4>Profil Kelompok</h4></a>
                                     </div>
                                 </div>									
                             </div>
@@ -315,48 +299,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <script src="vendors/counter-up/jquery.counterup.min.js"></script>
         <script src="js/mail-script.js"></script>
         <script src="js/theme.js"></script>
+        <script src="chart.js"></script>
         <script>
-            $(document).ready(function(){
-                var table = $('#dTable').DataTable({
-                    "ajax": {
-                        "url": "data.json",
-                        "dataSrc": "data",
-                    },
-                    columns: [
-                        {"data": null},
-                        {
-                            "data": "img",
-                            "render": function(data, type, row) {
-                                return '<center><img src="'+data+'" class="cleanImg"/></center>';
-                            }
-                        },
-                        {
-                            "data": "judul",
-                            "render": function(data, type, row) {
-                                return '<p class="cleanP">'+data+'</h4>';
-                            }
-                        },
-                        {"data": "author"},
-                        {"data": "rate_avg"},
-                        {"data": "rate_total"},
-                        {"data": "waktu_scraping"}
-                    ],
-                    "language": {
-                        "paginate": {
-                            "previous": "<i class='fa fa-chevron-left'></i>",
-                            "next": "<i class='fa fa-chevron-right'></i>"
-                        }
-                    }
-                });
-
-                table.on('order.dt search.dt', function () {
-                    table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                        cell.innerHTML = "<center>" + (i + 1) + "</center>";
-                    });
-                }).draw();
-                
-            });
-            // <img src="Foto/2.png" class="cleanImg" height="75px" alt="">
+            // TODO
         </script>
     </body>
 </html>
