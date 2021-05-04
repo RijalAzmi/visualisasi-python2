@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from datetime import datetime
 
-PATH = "D:\Downloads\Driver\chromedriver_win32\chromedriver.exe"
+PATH = "C:\Program Files (x86)\chromedriver_win32/chromedriver.exe"
 chrome_option = webdriver.ChromeOptions()
 chrome_option.add_experimental_option("excludeSwitches", ["enable-automation"])
 chrome_option.add_experimental_option('useAutomationExtension', False)
