@@ -89,6 +89,37 @@
                                 <h2>Visualisasi Data Scraping</h2>
                                 <p>Berikut merupakan data scraping yang dituangkan pada bentuk diagram</p>
                                 <!-- TODO -->
+                                <div class="card">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div>
+                                                <canvas id="totalRate" width="400" height="250">Browser anda tidak mendukung elemen canvas.</canvas>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div>
+                                                <canvas id="rate" width="400" height="250">Browser anda tidak mendukung elemen canvas.</canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p></p>
+                                <div class="card">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div>
+                                                <canvas id="penulisRate" width="400" height="250">Browser anda tidak mendukung elemen canvas.</canvas>
+                                            </div>
+                                        </div>
+                                        <p>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div>
+                                                <canvas id="judulRate" width="400" height="250">Browser anda tidak mendukung elemen canvas.</canvas>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </div>
+                             </div>
                             </div>
                         </div>
                         <div class="navigation-area">
@@ -302,6 +333,182 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <script src="chart.js"></script>
         <script>
             // TODO
+            /**
+             * totalRate - total pemberi rate
+             * rate - rate yang diberikan, (0 - 5)
+             * penulisRate - inisial penulis dengan rate tertinggi
+             * judulRate - inisial buku dengan rate tertinggi
+             */
+             document.addEventListener("DOMContentLoaded", function(event) { 
+                function loadJSON(callback) {
+                    var xobj = new XMLHttpRequest();
+                    xobj.overrideMimeType("application/json");
+                    xobj.open('GET', 'data.json', true);
+                    xobj.onreadystatechange = function () {
+                        if (xobj.readyState == 4 && xobj.status == "200") {
+                            callback(JSON.parse(xobj.responseText));
+                        }
+                    };
+                    xobj.send(null);  
+                }
+                loadJSON((bookList) => {
+                    var total_rate = {
+                        ke0: 0,
+                        ke100: 0,
+                        ke10000: 0,
+                        ke1000000: 0,
+                    }
+
+                    bookList.data.forEach((value, index, array) => {
+                        console.log(value);
+                        console.log(' - ' + index);
+                        console.log(' - ' + array);
+                    });
+
+                    var totalRatectx = document.getElementById('totalRate');
+                    var ratectx = document.getElementById('rate');
+                    var penulisRatectx = document.getElementById('penulisRate');
+                    var judulRatectx = document.getElementById('judulRate');
+
+                    var totalRateChart = new Chart(totalRatectx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['0 - 100', '101 - 1.000', '1.001 - 10.000', '10.001 - 100.000', '100.001 - 1.000.000', 'diatas 1.000.000'],
+                            datasets: [{
+                                label: 'Total Pemberi Rate pada Tiap Buku',
+                                data: [12, 19, 30, 5, 2, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                },
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                            }
+                        }
+                    });
+                    var rateChart = new Chart(ratectx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [12, 19, 3, 5, 2, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            aspectRatio: 0
+                        }
+                    });
+                    var penulisRateChart = new Chart(penulisRatectx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [12, 19, 3, 5, 2, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                    var judulRateChart = new Chart(judulRatectx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [12, 19, 3, 5, 2, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+            });
         </script>
     </body>
 </html>
